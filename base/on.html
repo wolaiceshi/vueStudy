@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <template v-if="loaded">
+            <div class="pos" v-for="(post, index) in posts">
+                <h3>[ {{ index}} ]{{ post.title}}</h3>
+                <p>{{ post.body }}</p>
+            </div>
+        </template>
+        <template v-else>
+            <p>loading...........</p>
+        </template>
+        <br>
+        <a href="" v-on:click.prevent="loadData">加载数据</a>
+    </div>
+    <script>
+        let app = new Vue({
+                              el     : '#app ',
+                              data   : {
+                                  posts    : null,
+                                  loaded   : false
+                              },
+                              methods: {
+                                  loadData: function () {
+                                      this.posts = [
+                                          {id: 1, title: 'one day', body: "good"},
+                                          {id: 2, title: 'two day', body: "very good"},
+                                          {id: 3, title: 'three day', body: "very very good"},
+                                      ];
+
+                                      this.loaded = true;
+                                  }
+                              },
+                              mounted() {
+
+                              }
+                          });
+    </script>
+</body>
+</html>

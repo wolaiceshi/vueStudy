@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>子组件向父组件发送消息</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+    <style>
+
+    </style>
+</head>
+<body>
+<div class="container" style="margin-top: 50px;">
+    <div id="app">
+        <h3 class="text-center text-warning">{{ topic }}</h3>
+        <hr>
+        <voter></voter>
+    </div>
+</div>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    // slot 插槽系统
+    // $emit 像父组件发送消息
+
+    let Counter = {
+        props   : [
+            'counter', 'do'
+        ],
+        template: `
+            <button v-on:click.prevent="emitHandler" v-bind:class="btnClass"><slot></slot></button>
+        `,
+        computed : {
+          btnClass () {
+             switch (this.do) {
+                 case 'add':
+                     return 'btn btn-large btn-success';
+                 case 'sub':
+                     return 'btn btn-large btn-danger';
+                 default:
+                     return '';
+             }
+          }
+        },
+        methods  : {
+            emitHandler() {
+                switch (this.do) {
+                    case 'add':
+                        this.$emit('vote-add', {
+                            amount: 1,
+                            do    : this.do
+                        });
+                        break;
+                    case 'sub':
+                        this.$emit('vote-sub', {
+                            amount: 10,
+                            do   : this.do
+                        });
+                        break;
+                    default :
+                        alert("异常");
+                        break;
+                }
+            }
+        }
+    };
+
+    let Voter = {
+        template  : `
+        <div>
+            {{ counter }}
+            <br>
+            <counter v-bind:counter="counter" do="add" v-on:vote-add="voteChanged">点赞</counter>
+            <counter v-bind:counter="counter" do="sub" v-on:vote-sub="voteChanged">猛踩</counter>
+        </div>
+      `,
+        data(){
+          return {
+              counter : 100
+          }
+        },
+        methods : {
+            voteChanged(data) {
+                switch (data.do) {
+                    case 'add':
+                        this.counter = this.counter + data.amount;
+                        break;
+                    case 'sub':
+                        this.counter = this.counter - data.amount;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        },
+        components: {
+            'Counter': Counter
+        }
+    };
+
+    let app = new Vue({
+                          el        : '#app',
+                          data      : {
+                              topic: "子组件向父组件发送消息"
+                          },
+                          components: {
+                              'Voter': Voter
+                          }
+                      });
+</script>
+</body>
+</html>

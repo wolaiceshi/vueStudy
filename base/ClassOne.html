@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .finished {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container" style="margin-top: 40px;">
+        <ul>
+            <li v-for="task in tasks" v-on:click.pervent="finishTask(task.id)" v-bind:class="{finished:task.done==true}">{{ task.name }}</li>
+        </ul>
+    </div>
+    <script>
+        let app = new Vue({
+                              el     : '#app',
+                              data   : {
+                                  tasks: [
+                                      {id: 1, name: '去保定吃驴肉火烧', done: false},
+                                      {id: 2, name: '去北京吃烤鸭', done: false},
+                                      {id: 3, name: '去天津吃狗不理包子', done: false},
+                                  ]
+                              },
+                              methods: {
+                                  finishTask(taskId) {
+                                      console.log(taskId);
+                                      let task = this.tasks.find(
+                                          (item) => {
+                                              return item.id === taskId;
+                                          }
+                                      );
+
+                                      task.done = true;
+                                  }
+                              }
+                          });
+    </script>
+</body>
+</html>

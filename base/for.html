@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="food in foods">{{ food }}</li>
+        </ul>
+        <br>
+        <div v-for="(value, property) in languages">
+            <h3>{{ property }}</h3>
+            <p>{{ value }}</p>
+        </div>
+        <br>
+        <template>
+            <div class="pos" v-for="(post, index) in posts">
+                <h3>[ {{ index}} ]{{ post.title}}</h3>
+                <p>{{ post.body }}</p>
+            </div>
+        </template>
+        <br>
+        <ul>
+            <li v-for="x in 20">{{ x }}</li>
+        </ul>
+    </div>
+    <script>
+        let app = new Vue({
+                              el  : '#app ',
+                              data: {
+                                  foods    : ['猪肉', '牛肉', '羊肉'],
+                                  posts    : [
+                                      {id: 1, title: 'one day', body: "good"},
+                                      {id: 2, title: 'two day', body: "very good"},
+                                      {id: 3, title: 'three day', body: "very very good"},
+                                  ],
+                                  languages: {
+                                      php  : "最好的语言",
+                                      mysql: "最好的数据库",
+                                      cenos: "最好的系统"
+                                  }
+                              }
+                          });
+    </script>
+</body>
+</html>

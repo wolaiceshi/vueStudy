@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>路由系统</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+    <style>
+
+    </style>
+</head>
+<body>
+<div class="container" style="margin-top: 50px;">
+    <div id="app">
+        <h3 class="text-center text-warning">{{ topic }}</h3>
+        <hr>
+        <app></app>
+    </div>
+</div>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script>
+  let Home = {
+    template: `
+       <div>Home Page</div>
+       `
+  };
+
+  let About = {
+    template: `
+        <div>About Page</div>
+       `
+  };
+
+  let App = {
+    template: `
+        <div class="wrapper">
+            <router-view></router-view>
+        </div>
+    `
+  };
+
+  let Router = new VueRouter({
+    routes: [
+      {path: '/', component: Home},
+      {path: '/about', component: About},
+    ]
+  });
+
+  let app = new Vue({
+    el: '#app',
+    router: Router,
+    data: {
+      topic: '路由系统',
+    },
+    components: {
+      'app' : App
+    }
+  });
+</script>
+</body>
+</html>

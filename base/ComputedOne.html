@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app" class="container" style="margin-top: 40px;">
+        {{ hello }}
+        <br>
+        {{ hello }}
+        <br>
+        {{ hello }}
+        <br>
+        {{ hello }}
+        <br>
+        {{ hello2() }}
+        <br>
+        {{ hello2() }}
+        <br>
+        {{ hello2() }}
+        <br>
+        {{ hello2() }}
+        <br>
+
+    </div>
+    <script>
+        // 死亡 缠绕
+        // vue.js:634 [Vue warn]: You may have an infinite update loop in a component render function.
+        // 暂时解决方案 把count 从data中提取出来,放到全局
+        let count = 0; // 把元素计数器放在这里
+        // 原理:
+        // vue 是时时刷新数据的,hello执行, hello2执行,因为值发生改变hello刷新数据,hello2地调用,无线循环
+        // 最终解决方法
+        // {{ hello2() }} 不要直接写页面调用,通过点击事件,属性的方式调用
+
+        let app = new Vue({
+                              el     : '#app ',
+                              data   : {
+                              },
+                              computed: { //属性,为了实现更复杂的逻辑,缓存,只调用一次
+                                  hello() {
+                                      return count++;
+                                  }
+                              },
+                              methods:{ // 方法
+                                  hello2() {
+                                      return count++;
+                                  }
+                              }
+                          });
+    </script>
+</body>
+</html>
